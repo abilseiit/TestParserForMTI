@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="selenium-java-2.44">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../library/selenium-java-2.44.0" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
