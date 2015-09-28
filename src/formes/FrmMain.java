@@ -38,10 +38,8 @@ public class FrmMain extends JFrame {
         //Дизайн
         lblLogin = new JLabel("Логин");
         txtLogin = new JTextField(15);
-        txtLogin.setText("abl.m@mail.ru");
         lblPass = new JLabel("Пароль");
         txtPass = new JPasswordField(15);
-        txtPass.setText("yteacl04");
         lblLink = new JLabel("Ссылка на тест");
         txtLink = new JTextField(15);
         btnStart = new JButton("Начать");
