@@ -38,8 +38,10 @@ public class FrmMain extends JFrame {
         //Дизайн
         lblLogin = new JLabel("Логин");
         txtLogin = new JTextField(15);
+
         lblPass = new JLabel("Пароль");
         txtPass = new JPasswordField(15);
+
         lblLink = new JLabel("Ссылка на тест");
         txtLink = new JTextField(15);
         btnStart = new JButton("Начать");
@@ -97,6 +99,7 @@ public class FrmMain extends JFrame {
         frame.pack();
     }
 
+    //лог выполнения
     public static void setStatus(String status){
         txtAreaStatus.append(status+"\n");
     }
@@ -110,7 +113,7 @@ public class FrmMain extends JFrame {
                 thread = new Thread(startTest);
                 thread.start();
             }catch (Exception ex){
-                JOptionPane.showMessageDialog(null, "Error, didn't run thread: "+ex);
+                JOptionPane.showMessageDialog(null, "Error, thread didn't run : "+ex);
             }
         }
     }

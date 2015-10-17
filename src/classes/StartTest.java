@@ -21,8 +21,11 @@ public class StartTest implements Runnable {
     public void run() {
         Parser parser = new Parser();
 
+        //проверяем коннект с инетом
         if (parser.checkInternetConnection()){
+            //авторизация на сайте
             if (parser.logIn(login, pass, link)){
+                //начинаем тест
                 if (parser.startTest()){
                     List<WebElement> listQuestions = parser.getQuestions();
                     System.out.println("Общее кол. вопросов: " + listQuestions.size());
@@ -34,22 +37,26 @@ public class StartTest implements Runnable {
                     String questionTxt = "";
                     String questionID = "";
                     int i = 1;
+                    //получаем вопрос
                     lab: for (WebElement question : listQuestions){
                         i++;
                         questionID = question.getAttribute("id");
                         questionTxt = question.findElement(By.className("qtext")).getText();
+                        //убираем лишние пробелы в начале вопроса
                         char firstChar = questionTxt.charAt(0);
                         if (firstChar == ' '){
                             String s = questionTxt.substring(1);
                             questionTxt = s;
                         }
+                        //проверка есть ли в БД ответы по данному предмету
                         if (!parser.checkTableName(tableName)){
                             System.out.println("Отсуствует таблица с ответами для данного предмета!");
                             FrmMain.setStatus("Отсуствует таблица с ответами для данного предмета!");
                             break lab;
-                       }
+                        }
                         System.out.println("Вопрос №"+i+" "+questionTxt+" ID "+questionID);
                         FrmMain.setStatus("Вопрос №: "+i+"\n"+questionTxt);
+                        //ищем ответ
                         try {
                             listAnswer = parser.getAnswer(questionTxt, tableName);
                             if (listAnswer != null){

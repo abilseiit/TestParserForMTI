@@ -20,6 +20,7 @@ public class Parser {
     Connection connection;
     private static WebDriver webDriver = new HtmlUnitDriver();
 
+    //авторизация на сайте (логин, пароль и ссылка на тест)
     protected boolean logIn(String login, String pass, String testUrl){
         LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF);
@@ -52,6 +53,7 @@ public class Parser {
         }
     }
 
+    //стартуем тест
     protected boolean startTest(){
         try {
             System.out.println("До нажатия на кнопку чести "+webDriver.getTitle());
@@ -71,6 +73,7 @@ public class Parser {
         }
     }
 
+    //проверка инета
     public boolean checkInternetConnection(){
         Socket socket = new Socket();
         InetSocketAddress address = new InetSocketAddress("www.google.com", 80);
@@ -84,6 +87,7 @@ public class Parser {
         }
     }
 
+    //сверка с бд, если ли данная таблица в бд (название предмета в качества имени)
     public boolean checkTableName(String tableName){
         try {
             Connection conn = DBConnection.dbConnector();
@@ -101,6 +105,7 @@ public class Parser {
         }
     }
 
+    //получаем правильный ответ с бд (вопрос, название предмета)
     protected List<String> getAnswer(String question, String tableName) throws SQLException {
         Connection conn = DBConnection.dbConnector();
         Statement st = conn.createStatement();
@@ -134,6 +139,7 @@ public class Parser {
         }
     }
 
+    //ишем на страничке правильный ответ
     protected boolean checkAnswer(String answer, String questionID){
         WebElement content = webDriver.findElement(By.xpath("//div[@id=\"" + questionID + "\"]"));
         List<WebElement> listDiv = content.findElement(By.className("answer")).findElements(By.tagName("div"));
@@ -152,10 +158,12 @@ public class Parser {
         return false;
     }
 
+    //получаем название предмета
     protected String getTableName(){
         return webDriver.findElement(By.xpath("//div[@class=\"breadcrumb\"]/ul/li[3]")).getText();
     }
 
+    //заканчиваем тест
     protected void endTest(){
         WebElement btnEndTest = webDriver.findElement(By.name("next"));
         btnEndTest.click();
@@ -163,6 +171,7 @@ public class Parser {
         FrmMain.setStatus(webDriver.getCurrentUrl());
     }
 
+    //получаем вопрос
     public List<WebElement> getQuestions(){
         return webDriver.findElements(By.xpath("//div[@class='que multichoice deferredfeedback notyetanswered']"));
     }
